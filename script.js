@@ -1,28 +1,32 @@
 //jshint esversion:6
-$(document).ready(function () {
+  $(document).ready(function () {
 
-    $('.new-quote').click(function () {
+    $('.new-quote').click(quote);
 
-    const URL = 'https://api.forismatic.com/api/1.0/?format=jsonp&method=getQuote&jsonp=?&lang=en';
+    function quote() {
+        const URL = 'https://api.forismatic.com/api/1.0/?format=jsonp&method=getQuote&jsonp=?&lang=en';
 
-    $.getJSON(URL, function (data) {
+            $.getJSON(URL, function (data) {
 
-      let quote = data.quoteText;
-      let author = data.quoteAuthor;
+                console.log(data);
 
-      $('#quote').text(quote);
+                let quote = data.quoteText;
+                let author = data.quoteAuthor;
 
-      if (author === '') {
-            $('#author').text('~ Unknown');
-        } else {
-            $('#author').text('~'+ author);
+                $('#quote').text(quote);
+
+                if (author === '') {
+                    $('#author').text('~Unknown');
+                } else {
+                    $('#author').text('~' + author);
+                }
+                $('.tweet').attr('href', 'https://twitter.com/intent/tweet?hashtags=quotes&text=' + encodeURIComponent(quote + '- '+ author));
+
+
+            });
         }
-        console.log(author)
+
+        quote();
 
 
-
-    });
-
-    });
 });
-
